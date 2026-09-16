@@ -8,7 +8,7 @@ An Android-first countdown app for events, H-7/H-3/H-1/H-0 reminders, a home-scr
 - All-day events counted by local calendar day; timed events counted to the second.
 - Inexact local notifications for H-7, H-3, H-1, and H-0.
 - Read-only device calendar import through Android `CalendarContract`.
-- Read-only Google Calendar sync through Google OAuth.
+- Read-only Google Calendar sync through Google OAuth (`calendar.events.readonly`).
 - Native Android home-screen widget for the selected countdown.
 
 Google Calendar sync is intentionally read-only in this MVP. It does not create, edit, or delete events in Google Calendar.
@@ -45,7 +45,7 @@ The client ID is passed at build time and is not committed. If it is missing, th
 ## Calendar modes
 
 - **Device**: requests read-only calendar permission and reads calendars already synced to the Android device. This can include Google Calendar, but it is not an in-app Google login.
-- **Google**: signs in explicitly, requests `calendar.readonly`, calls the Google Calendar API, and labels imported events as `GOOGLE CALENDAR`.
+- **Google**: signs in explicitly, requests `calendar.events.readonly`, calls the Google Calendar API, and labels imported events as `GOOGLE CALENDAR`.
 
 ## Android QA
 

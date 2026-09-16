@@ -6,7 +6,7 @@ import 'package:http/http.dart' as http;
 import 'platform_interfaces.dart';
 
 const String googleCalendarReadOnlyScope =
-    'https://www.googleapis.com/auth/calendar.readonly';
+    'https://www.googleapis.com/auth/calendar.events.readonly';
 
 class GoogleCalendarSetupException implements Exception {
   const GoogleCalendarSetupException(this.message);
