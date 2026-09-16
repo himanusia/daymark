@@ -1,15 +1,15 @@
 import 'package:flutter_test/flutter_test.dart';
 
-import 'package:daymark/data/event_repository.dart';
-import 'package:daymark/domain/daymark_event.dart';
-import 'package:daymark/platform/platform_interfaces.dart';
-import 'package:daymark/presentation/daymark_app.dart';
+import 'package:jelara/data/event_repository.dart';
+import 'package:jelara/domain/jelara_event.dart';
+import 'package:jelara/platform/platform_interfaces.dart';
+import 'package:jelara/presentation/jelara_app.dart';
 
 void main() {
   testWidgets('renders a focal mark with its semantic countdown state', (
     tester,
   ) async {
-    final event = DaymarkEvent(
+    final event = JelaraEvent(
       id: 'launch',
       title: 'Product launch',
       start: DateTime(2026, 9, 20),
@@ -17,7 +17,7 @@ void main() {
     );
 
     await tester.pumpWidget(
-      DaymarkApp(
+      JelaraApp(
         repository: MemoryEventRepository(
           events: [event],
           selectedId: event.id,
@@ -30,7 +30,7 @@ void main() {
     );
     await tester.pumpAndSettle();
 
-    expect(find.text('H- COUNTDOWN'), findsOneWidget);
+    expect(find.text('JELARA'), findsOneWidget);
     expect(find.text('Make time visible.'), findsOneWidget);
     expect(find.text('Product launch'), findsNWidgets(2));
     expect(find.text('D-4'), findsNWidgets(2));

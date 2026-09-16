@@ -4,7 +4,7 @@ import 'platform_interfaces.dart';
 
 class AndroidCalendarGateway implements CalendarGateway {
   AndroidCalendarGateway({MethodChannel? channel})
-    : _channel = channel ?? const MethodChannel('daymark/calendar');
+    : _channel = channel ?? const MethodChannel('jelara/calendar');
 
   final MethodChannel _channel;
 

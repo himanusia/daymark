@@ -1,8 +1,8 @@
 import 'package:flutter_test/flutter_test.dart';
 
-import 'package:daymark/platform/google_calendar_gateway.dart';
-import 'package:daymark/platform/platform_interfaces.dart';
-import 'package:daymark/domain/daymark_event.dart';
+import 'package:jelara/platform/google_calendar_gateway.dart';
+import 'package:jelara/platform/platform_interfaces.dart';
+import 'package:jelara/domain/jelara_event.dart';
 
 void main() {
   test('Google Calendar parser keeps valid events in start order', () {
@@ -47,7 +47,7 @@ void main() {
     expect(events.first.sourceId, 'all-day');
     expect(events.first.allDay, isTrue);
     expect(events.first.provider, CalendarProvider.google);
-    expect(events.first.toDaymarkEvent().source, EventSource.google);
+    expect(events.first.toJelaraEvent().source, EventSource.google);
     expect(events.last.title, 'Later meeting');
     expect(events.last.location, 'Room B');
     expect(events.last.calendarName, 'Google Calendar');

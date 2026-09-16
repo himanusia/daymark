@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../domain/daymark_event.dart';
+import '../domain/jelara_event.dart';
 
 sealed class EventEditorResult {
   const EventEditorResult();
@@ -9,7 +9,7 @@ sealed class EventEditorResult {
 class EventSavedResult extends EventEditorResult {
   const EventSavedResult(this.event);
 
-  final DaymarkEvent event;
+  final JelaraEvent event;
 }
 
 class EventDeletedResult extends EventEditorResult {
@@ -21,11 +21,11 @@ class EventDeletedResult extends EventEditorResult {
 class EventEditorPage extends StatefulWidget {
   const EventEditorPage({super.key, this.initialEvent});
 
-  final DaymarkEvent? initialEvent;
+  final JelaraEvent? initialEvent;
 
   static Future<EventEditorResult?> show(
     BuildContext context, {
-    DaymarkEvent? event,
+    JelaraEvent? event,
   }) {
     return Navigator.of(context).push<EventEditorResult>(
       MaterialPageRoute(builder: (_) => EventEditorPage(initialEvent: event)),
@@ -90,7 +90,7 @@ class _EventEditorPageState extends State<EventEditorPage> {
               ),
               const SizedBox(height: 8),
               Text(
-                'H- Countdown keeps this event on your device and counts from the local time shown below.',
+                'Jelara keeps this event on your device and counts from the local time shown below.',
                 style: Theme.of(context).textTheme.bodyMedium
                     ?.copyWith(color: colors.onSurface.withValues(alpha: 0.62)),
               ),
@@ -261,7 +261,7 @@ class _EventEditorPageState extends State<EventEditorPage> {
     final start = _allDay
         ? DateTime(_start.year, _start.month, _start.day)
         : _start;
-    final event = DaymarkEvent(
+    final event = JelaraEvent(
       id:
           widget.initialEvent?.id ??
           'event-${DateTime.now().microsecondsSinceEpoch}',
@@ -282,7 +282,7 @@ class _EventEditorPageState extends State<EventEditorPage> {
       builder: (context) => AlertDialog(
         title: const Text('Delete this mark?'),
         content: Text(
-          '“${widget.initialEvent!.title}” will be removed from H- Countdown.',
+          '“${widget.initialEvent!.title}” will be removed from Jelara.',
         ),
         actions: [
           TextButton(

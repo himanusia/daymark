@@ -3,12 +3,12 @@ import 'package:flutter/material.dart';
 import '../data/event_repository.dart';
 import '../platform/google_calendar_gateway.dart';
 import '../platform/platform_interfaces.dart';
-import 'daymark_controller.dart';
-import 'daymark_theme.dart';
+import 'jelara_controller.dart';
+import 'jelara_theme.dart';
 import 'home_page.dart';
 
-class DaymarkApp extends StatelessWidget {
-  const DaymarkApp({
+class JelaraApp extends StatelessWidget {
+  const JelaraApp({
     super.key,
     required this.repository,
     required this.calendar,
@@ -27,7 +27,7 @@ class DaymarkApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final controller = DaymarkController(
+    final controller = JelaraController(
       repository: repository,
       calendar: calendar,
       widget: widget,
@@ -36,26 +36,26 @@ class DaymarkApp extends StatelessWidget {
       clock: clock,
     );
     return MaterialApp(
-      title: 'H- Countdown',
+      title: 'Jelara',
       debugShowCheckedModeBanner: false,
-      theme: daymarkLightTheme(),
-      darkTheme: daymarkDarkTheme(),
+      theme: jelaraLightTheme(),
+      darkTheme: jelaraDarkTheme(),
       themeMode: ThemeMode.system,
-      home: _DaymarkBootstrap(controller: controller),
+      home: _JelaraBootstrap(controller: controller),
     );
   }
 }
 
-class _DaymarkBootstrap extends StatefulWidget {
-  const _DaymarkBootstrap({required this.controller});
+class _JelaraBootstrap extends StatefulWidget {
+  const _JelaraBootstrap({required this.controller});
 
-  final DaymarkController controller;
+  final JelaraController controller;
 
   @override
-  State<_DaymarkBootstrap> createState() => _DaymarkBootstrapState();
+  State<_JelaraBootstrap> createState() => _JelaraBootstrapState();
 }
 
-class _DaymarkBootstrapState extends State<_DaymarkBootstrap> {
+class _JelaraBootstrapState extends State<_JelaraBootstrap> {
   late Future<void> _ready;
 
   @override
@@ -70,10 +70,10 @@ class _DaymarkBootstrapState extends State<_DaymarkBootstrap> {
       future: _ready,
       builder: (context, snapshot) {
         if (snapshot.connectionState != ConnectionState.done) {
-          return const _DaymarkLoading();
+          return const _JelaraLoading();
         }
         if (snapshot.hasError) {
-          return _DaymarkLoadError(onRetry: _retry);
+          return _JelaraLoadError(onRetry: _retry);
         }
         return HomePage(controller: widget.controller);
       },
@@ -87,8 +87,8 @@ class _DaymarkBootstrapState extends State<_DaymarkBootstrap> {
   }
 }
 
-class _DaymarkLoading extends StatelessWidget {
-  const _DaymarkLoading();
+class _JelaraLoading extends StatelessWidget {
+  const _JelaraLoading();
 
   @override
   Widget build(BuildContext context) {
@@ -98,7 +98,7 @@ class _DaymarkLoading extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           children: [
             Text(
-              'H- COUNTDOWN',
+              'JELARA',
               style: Theme.of(context).textTheme.labelMedium?.copyWith(
                 color: Theme.of(context).colorScheme.primary,
                 letterSpacing: 2.4,
@@ -120,8 +120,8 @@ class _DaymarkLoading extends StatelessWidget {
   }
 }
 
-class _DaymarkLoadError extends StatelessWidget {
-  const _DaymarkLoadError({required this.onRetry});
+class _JelaraLoadError extends StatelessWidget {
+  const _JelaraLoadError({required this.onRetry});
 
   final VoidCallback onRetry;
 
@@ -141,7 +141,7 @@ class _DaymarkLoadError extends StatelessWidget {
               ),
               const SizedBox(height: 16),
               Text(
-                'H- Countdown could not open your marks.',
+                'Jelara could not open your marks.',
                 textAlign: TextAlign.center,
                 style: Theme.of(context).textTheme.titleLarge,
               ),
