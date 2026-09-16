@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-abstract final class DaymarkPalette {
+abstract final class JelaraPalette {
   static const ink = Color(0xFF0D1117);
   static const night = Color(0xFF121821);
   static const surface = Color(0xFF1A222D);
@@ -15,38 +15,38 @@ abstract final class DaymarkPalette {
   static const muted = Color(0xFF98A7B6);
 }
 
-ThemeData daymarkDarkTheme() {
+ThemeData jelaraDarkTheme() {
   final scheme =
       ColorScheme.fromSeed(
-        seedColor: DaymarkPalette.mintStrong,
+        seedColor: JelaraPalette.mintStrong,
         brightness: Brightness.dark,
       ).copyWith(
-        primary: DaymarkPalette.mint,
-        onPrimary: DaymarkPalette.ink,
-        secondary: DaymarkPalette.amber,
-        onSecondary: DaymarkPalette.ink,
-        error: DaymarkPalette.coral,
-        onError: DaymarkPalette.ink,
-        surface: DaymarkPalette.night,
-        onSurface: DaymarkPalette.cloud,
+        primary: JelaraPalette.mint,
+        onPrimary: JelaraPalette.ink,
+        secondary: JelaraPalette.amber,
+        onSecondary: JelaraPalette.ink,
+        error: JelaraPalette.coral,
+        onError: JelaraPalette.ink,
+        surface: JelaraPalette.night,
+        onSurface: JelaraPalette.cloud,
       );
 
   return ThemeData(
     useMaterial3: true,
     brightness: Brightness.dark,
     colorScheme: scheme,
-    scaffoldBackgroundColor: DaymarkPalette.ink,
+    scaffoldBackgroundColor: JelaraPalette.ink,
     appBarTheme: const AppBarTheme(
       backgroundColor: Colors.transparent,
-      foregroundColor: DaymarkPalette.cloud,
+      foregroundColor: JelaraPalette.cloud,
       elevation: 0,
       centerTitle: false,
       systemOverlayStyle: SystemUiOverlayStyle.light,
     ),
     inputDecorationTheme: InputDecorationTheme(
       filled: true,
-      fillColor: DaymarkPalette.surface,
-      hintStyle: const TextStyle(color: DaymarkPalette.muted),
+      fillColor: JelaraPalette.surface,
+      hintStyle: const TextStyle(color: JelaraPalette.muted),
       border: OutlineInputBorder(
         borderRadius: BorderRadius.circular(16),
         borderSide: BorderSide.none,
@@ -58,7 +58,7 @@ ThemeData daymarkDarkTheme() {
       focusedBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(16),
         borderSide: const BorderSide(
-          color: DaymarkPalette.mintStrong,
+          color: JelaraPalette.mintStrong,
           width: 1.5,
         ),
       ),
@@ -66,27 +66,27 @@ ThemeData daymarkDarkTheme() {
     ),
     filledButtonTheme: FilledButtonThemeData(
       style: FilledButton.styleFrom(
-        backgroundColor: DaymarkPalette.mint,
-        foregroundColor: DaymarkPalette.ink,
+        backgroundColor: JelaraPalette.mint,
+        foregroundColor: JelaraPalette.ink,
         minimumSize: const Size(0, 52),
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
       ),
     ),
     outlinedButtonTheme: OutlinedButtonThemeData(
       style: OutlinedButton.styleFrom(
-        foregroundColor: DaymarkPalette.cloud,
+        foregroundColor: JelaraPalette.cloud,
         side: const BorderSide(color: Color(0x665B7182)),
         minimumSize: const Size(0, 48),
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
       ),
     ),
     chipTheme: ChipThemeData(
-      backgroundColor: DaymarkPalette.surface,
-      selectedColor: DaymarkPalette.mint,
-      disabledColor: DaymarkPalette.surface,
-      secondarySelectedColor: DaymarkPalette.mint,
-      labelStyle: const TextStyle(color: DaymarkPalette.cloud),
-      secondaryLabelStyle: const TextStyle(color: DaymarkPalette.ink),
+      backgroundColor: JelaraPalette.surface,
+      selectedColor: JelaraPalette.mint,
+      disabledColor: JelaraPalette.surface,
+      secondarySelectedColor: JelaraPalette.mint,
+      labelStyle: const TextStyle(color: JelaraPalette.cloud),
+      secondaryLabelStyle: const TextStyle(color: JelaraPalette.ink),
       padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(14)),
       side: const BorderSide(color: Color(0x332A3947)),
@@ -100,10 +100,10 @@ ThemeData daymarkDarkTheme() {
   );
 }
 
-ThemeData daymarkLightTheme() {
+ThemeData jelaraLightTheme() {
   final scheme =
       ColorScheme.fromSeed(
-        seedColor: DaymarkPalette.mintStrong,
+        seedColor: JelaraPalette.mintStrong,
         brightness: Brightness.light,
       ).copyWith(
         primary: const Color(0xFF087A5C),
@@ -111,8 +111,8 @@ ThemeData daymarkLightTheme() {
         secondary: const Color(0xFF9A5B00),
         onSecondary: Colors.white,
         error: const Color(0xFFBA1A1A),
-        surface: DaymarkPalette.cloud,
-        onSurface: DaymarkPalette.graphite,
+        surface: JelaraPalette.cloud,
+        onSurface: JelaraPalette.graphite,
       );
 
   return ThemeData(
@@ -122,7 +122,7 @@ ThemeData daymarkLightTheme() {
     scaffoldBackgroundColor: const Color(0xFFF6F8F5),
     appBarTheme: const AppBarTheme(
       backgroundColor: Colors.transparent,
-      foregroundColor: DaymarkPalette.graphite,
+      foregroundColor: JelaraPalette.graphite,
       elevation: 0,
       centerTitle: false,
       systemOverlayStyle: SystemUiOverlayStyle.dark,
@@ -154,7 +154,7 @@ ThemeData daymarkLightTheme() {
     ),
     outlinedButtonTheme: OutlinedButtonThemeData(
       style: OutlinedButton.styleFrom(
-        foregroundColor: DaymarkPalette.graphite,
+        foregroundColor: JelaraPalette.graphite,
         side: const BorderSide(color: Color(0x55343F46)),
         minimumSize: const Size(0, 48),
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
@@ -165,7 +165,7 @@ ThemeData daymarkLightTheme() {
       space: 1,
       thickness: 1,
     ),
-    textTheme: _textTheme(DaymarkPalette.graphite),
+    textTheme: _textTheme(JelaraPalette.graphite),
   );
 }
 

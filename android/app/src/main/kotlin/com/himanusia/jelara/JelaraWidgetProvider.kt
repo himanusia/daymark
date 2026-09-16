@@ -1,4 +1,4 @@
-package com.himanusia.daymark
+package com.himanusia.jelara
 
 import android.app.PendingIntent
 import android.appwidget.AppWidgetManager
@@ -9,7 +9,7 @@ import android.content.Intent
 import android.os.Build
 import android.widget.RemoteViews
 
-class DaymarkWidgetProvider : AppWidgetProvider() {
+class JelaraWidgetProvider : AppWidgetProvider() {
     override fun onUpdate(
         context: Context,
         appWidgetManager: AppWidgetManager,
@@ -19,7 +19,7 @@ class DaymarkWidgetProvider : AppWidgetProvider() {
     }
 
     companion object {
-        private const val WIDGET_PREFS = "daymark_widget"
+        private const val WIDGET_PREFS = "jelara_widget"
         private const val KEY_TITLE = "title"
         private const val KEY_COUNTDOWN = "countdown"
         private const val KEY_STATUS = "status"
@@ -27,7 +27,7 @@ class DaymarkWidgetProvider : AppWidgetProvider() {
         fun updateAll(context: Context, widgetIds: IntArray? = null) {
             val manager = AppWidgetManager.getInstance(context)
             val ids = widgetIds ?: manager.getAppWidgetIds(
-                ComponentName(context, DaymarkWidgetProvider::class.java),
+                ComponentName(context, JelaraWidgetProvider::class.java),
             )
             ids.forEach { widgetId ->
                 manager.updateAppWidget(widgetId, buildRemoteViews(context))
@@ -37,13 +37,13 @@ class DaymarkWidgetProvider : AppWidgetProvider() {
         private fun buildRemoteViews(context: Context): RemoteViews {
             val preferences = context.getSharedPreferences(WIDGET_PREFS, Context.MODE_PRIVATE)
             val title = preferences.getString(KEY_TITLE, null).orEmpty()
-                .ifBlank { "Add a mark in H- Countdown" }
+                .ifBlank { "Add a mark in Jelara" }
             val countdown = preferences.getString(KEY_COUNTDOWN, null).orEmpty()
                 .ifBlank { "—" }
             val status = preferences.getString(KEY_STATUS, null).orEmpty()
                 .ifBlank { "FOCUS" }
 
-            val views = RemoteViews(context.packageName, R.layout.daymark_widget)
+            val views = RemoteViews(context.packageName, R.layout.jelara_widget)
             views.setTextViewText(R.id.widget_status, status.uppercase())
             views.setTextViewText(R.id.widget_title, title)
             views.setTextViewText(R.id.widget_countdown, countdown)

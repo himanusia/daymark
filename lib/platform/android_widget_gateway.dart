@@ -1,17 +1,17 @@
 import 'package:flutter/services.dart';
 
 import '../domain/countdown.dart';
-import '../domain/daymark_event.dart';
+import '../domain/jelara_event.dart';
 import 'platform_interfaces.dart';
 
 class AndroidWidgetGateway implements WidgetGateway {
   AndroidWidgetGateway({MethodChannel? channel})
-    : _channel = channel ?? const MethodChannel('daymark/widget');
+    : _channel = channel ?? const MethodChannel('jelara/widget');
 
   final MethodChannel _channel;
 
   @override
-  Future<void> update(DaymarkEvent event, CountdownSnapshot snapshot) {
+  Future<void> update(JelaraEvent event, CountdownSnapshot snapshot) {
     return _channel.invokeMethod<void>('updateWidget', {
       'title': event.title,
       'countdown': snapshot.displayText,

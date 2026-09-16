@@ -3,7 +3,7 @@ import 'package:flutter_timezone/flutter_timezone.dart';
 import 'package:timezone/data/latest_all.dart' as tz_data;
 import 'package:timezone/timezone.dart' as tz;
 
-import '../domain/daymark_event.dart';
+import '../domain/jelara_event.dart';
 import '../domain/reminder.dart';
 import 'platform_interfaces.dart';
 
@@ -11,8 +11,8 @@ class AndroidReminderGateway implements ReminderGateway {
   AndroidReminderGateway({FlutterLocalNotificationsPlugin? plugin})
     : _plugin = plugin ?? FlutterLocalNotificationsPlugin();
 
-  static const _channelId = 'daymark_reminders';
-  static const _channelName = 'Daymark reminders';
+  static const _channelId = 'jelara_reminders';
+  static const _channelName = 'Jelara reminders';
   static const _channelDescription = 'Reminders for your saved marks';
 
   final FlutterLocalNotificationsPlugin _plugin;
@@ -61,7 +61,7 @@ class AndroidReminderGateway implements ReminderGateway {
   }
 
   @override
-  Future<void> sync(DaymarkEvent event, {required DateTime now}) async {
+  Future<void> sync(JelaraEvent event, {required DateTime now}) async {
     await _initialize();
     await cancelEvent(event.id);
     final details = const NotificationDetails(

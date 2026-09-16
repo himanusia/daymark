@@ -5,7 +5,7 @@
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
     <application
-        android:label="H- Countdown"
+        android:label="Jelara"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity
@@ -36,14 +36,14 @@
             android:name="flutterEmbedding"
             android:value="2" />
         <receiver
-            android:name=".DaymarkWidgetProvider"
+            android:name=".JelaraWidgetProvider"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
             </intent-filter>
             <meta-data
                 android:name="android.appwidget.provider"
-                android:resource="@xml/daymark_widget_info" />
+                android:resource="@xml/jelara_widget_info" />
         </receiver>
         <receiver
             android:exported="false"

@@ -4,17 +4,17 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 import '../domain/countdown.dart';
-import '../domain/daymark_event.dart';
+import '../domain/jelara_event.dart';
 import '../platform/platform_interfaces.dart';
 import 'calendar_import_page.dart';
-import 'daymark_controller.dart';
-import 'daymark_theme.dart';
+import 'jelara_controller.dart';
+import 'jelara_theme.dart';
 import 'event_editor_page.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key, required this.controller});
 
-  final DaymarkController controller;
+  final JelaraController controller;
 
   @override
   State<HomePage> createState() => _HomePageState();
@@ -24,7 +24,7 @@ class _HomePageState extends State<HomePage> {
   Timer? _ticker;
   bool _working = false;
 
-  DaymarkController get _controller => widget.controller;
+  JelaraController get _controller => widget.controller;
 
   @override
   void initState() {
@@ -153,14 +153,14 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  Future<void> _selectEvent(DaymarkEvent event) async {
+  Future<void> _selectEvent(JelaraEvent event) async {
     if (_working) return;
     setState(() => _working = true);
     await _controller.selectEvent(event.id);
     if (mounted) setState(() => _working = false);
   }
 
-  Future<void> _openEditor([DaymarkEvent? event]) async {
+  Future<void> _openEditor([JelaraEvent? event]) async {
     if (_working) return;
     final result = await EventEditorPage.show(context, event: event);
     if (!mounted || result == null) return;
@@ -175,13 +175,13 @@ class _HomePageState extends State<HomePage> {
     if (mounted) setState(() => _working = false);
   }
 
-  Future<void> _deleteEvent(DaymarkEvent event) async {
+  Future<void> _deleteEvent(JelaraEvent event) async {
     if (_working) return;
     final confirmed = await showDialog<bool>(
       context: context,
       builder: (context) => AlertDialog(
         title: const Text('Delete this mark?'),
-        content: Text('“${event.title}” will be removed from H- Countdown.'),
+        content: Text('“${event.title}” will be removed from Jelara.'),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(context, false),
@@ -218,7 +218,7 @@ class _HomePageState extends State<HomePage> {
     );
     if (!mounted || imported == null) return;
     setState(() => _working = true);
-    final event = imported.toDaymarkEvent();
+    final event = imported.toJelaraEvent();
     final result = await _controller.saveEvent(event);
     if (mounted) {
       _showSaveFeedback(event, result);
@@ -226,13 +226,13 @@ class _HomePageState extends State<HomePage> {
     }
   }
 
-  void _showSaveFeedback(DaymarkEvent event, SaveEventResult result) {
+  void _showSaveFeedback(JelaraEvent event, SaveEventResult result) {
     if (result.warning != null) {
       _showMessage('Saved, but ${result.warning}');
     } else if (event.reminders.isNotEmpty &&
         result.notificationPermission == NotificationPermissionStatus.denied) {
       _showMessage(
-        'Saved. Notifications are off for H- Countdown in system settings.',
+        'Saved. Notifications are off for Jelara in system settings.',
       );
     } else if (event.reminders.isNotEmpty && !result.notificationsSynced) {
       _showMessage('Saved. Reminders will be available on Android.');
@@ -264,7 +264,7 @@ class _Header extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                'H- COUNTDOWN',
+                'JELARA',
                 style: Theme.of(context).textTheme.labelMedium?.copyWith(
                   color: Theme.of(context).colorScheme.primary,
                   letterSpacing: 2.4,
@@ -309,7 +309,7 @@ class _FocalEventCard extends StatelessWidget {
     required this.onEdit,
   });
 
-  final DaymarkEvent event;
+  final JelaraEvent event;
   final CountdownSnapshot snapshot;
   final VoidCallback onEdit;
 
@@ -437,7 +437,7 @@ class _EventListTile extends StatelessWidget {
     required this.onDelete,
   });
 
-  final DaymarkEvent event;
+  final JelaraEvent event;
   final CountdownSnapshot snapshot;
   final bool selected;
   final VoidCallback onTap;
@@ -652,15 +652,15 @@ Color _accent(BuildContext context, CountdownStatus status) {
   switch (status) {
     case CountdownStatus.upcoming:
       return Theme.of(context).brightness == Brightness.dark
-          ? DaymarkPalette.mint
+          ? JelaraPalette.mint
           : const Color(0xFF087A5C);
     case CountdownStatus.today:
       return Theme.of(context).brightness == Brightness.dark
-          ? DaymarkPalette.amber
+          ? JelaraPalette.amber
           : const Color(0xFF9A5B00);
     case CountdownStatus.overdue:
       return Theme.of(context).brightness == Brightness.dark
-          ? DaymarkPalette.coral
+          ? JelaraPalette.coral
           : const Color(0xFFBA1A1A);
   }
 }
@@ -668,15 +668,15 @@ Color _accent(BuildContext context, CountdownStatus status) {
 Color _onAccent(CountdownStatus status) {
   switch (status) {
     case CountdownStatus.upcoming:
-      return DaymarkPalette.mint;
+      return JelaraPalette.mint;
     case CountdownStatus.today:
-      return DaymarkPalette.amber;
+      return JelaraPalette.amber;
     case CountdownStatus.overdue:
-      return DaymarkPalette.coral;
+      return JelaraPalette.coral;
   }
 }
 
-String _eventDateLine(DaymarkEvent event) {
+String _eventDateLine(JelaraEvent event) {
   final local = event.localStart;
   final date = DateFormat('EEE, d MMM yyyy').format(local);
   return event.allDay
