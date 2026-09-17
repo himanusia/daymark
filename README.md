@@ -54,7 +54,7 @@ The normal gate order is:
 1. `flutter analyze`
 2. `flutter test`
 3. Android emulator install/smoke test
-4. Physical Fold 5 install/visual and interaction QA
+4. Physical Android device install/visual and interaction QA
 
 The display name and current package/repository slug are **It's the Day!**.
 
@@ -72,19 +72,35 @@ The display name and current package/repository slug are **It's the Day!**.
 The planned server stack is:
 
 - **Cloudflare Workers + Hono**: typed HTTP/API layer.
+- **Better Auth**: server-side identity, Google sign-in, account linking, and session lifecycle mounted in Hono. It is not a Flutter package and never runs with mobile client secrets.
 - **Cloudflare D1**: authoritative relational database for users, groups, alarms, memberships, response states, challenge metadata, and audit events.
 - **Durable Objects**: per-shared-alarm/group coordination and realtime presence/WebSocket fan-out; not a global singleton.
 - **R2**: private object storage for optional proof photos, accessed through short-lived authorized upload/download URLs.
 - **Queues/Workflows or scheduled Worker jobs**: notification fan-out, retries, recurring alarms, and missed-response transitions.
 
-Hono is the API framework; it is not the database. D1 is the durable database of record. Local preferences remain only a device cache/fallback after sync exists.
+Hono is the API framework; it is not the database. D1 is the durable database of record. Better Auth owns the authentication/session tables; application tables for groups, alarms, responses, and challenges remain explicitly modeled and authorized by the API. Local preferences remain only a device cache/fallback after sync exists.
+
+### Flutter authentication boundary
+
+Better Auth is a TypeScript server library, so the Flutter app integrates with it over HTTPS rather than importing a Dart SDK. The planned native flow is:
+
+1. Flutter uses the native Google Sign-In plugin to obtain a Google ID token.
+2. Flutter sends that ID token to Better Auth's Google sign-in endpoint over HTTPS.
+3. Better Auth verifies the token, creates/links the user in D1, and returns a session.
+4. The Flutter client stores only the Better Auth session/bearer token in platform secure storage and attaches it to Hono API requests.
+5. The Worker uses Better Auth session validation before reading or mutating private/shared alarm data.
+
+The Better Auth bearer plugin is the intended mobile transport. Browser cookies remain appropriate for a future web client. Google Calendar authorization stays separate and incremental: account sign-in starts with identity scopes, while `calendar.events.readonly` is requested only when the user connects Calendar.
 
 ## TODO / not finished
 
 ### Cloudflare backend and identity
 
 - [ ] Create a separate `server/` Cloudflare Worker using Hono and Wrangler.
-- [ ] Add Google account authentication/token verification for the `com.himanusia.itstheday` client without storing the Google client secret in the mobile app.
+- [ ] Add Better Auth to the Hono Worker and mount `/api/auth/*`.
+- [ ] Validate a D1-compatible Better Auth adapter (including schema generation/migrations) against local and deployed Workers before production use.
+- [ ] Add Google account authentication/token verification for Flutter without storing the Google client secret in the mobile app.
+- [ ] Add the Better Auth bearer plugin and a Flutter `AuthApiClient` using HTTPS plus platform secure storage; do not store auth tokens in `SharedPreferences`.
 - [ ] Add D1 migrations for users, groups, memberships, private/shared alarms, per-member responses, device tokens, and append-only audit events.
 - [ ] Add server-side authorization: private alarms are owner-only; shared alarms require active group membership and role checks.
 - [ ] Add idempotency keys and an outbox/retry path for notification and response events.
@@ -117,4 +133,4 @@ Hono is the API framework; it is not the database. D1 is the durable database of
 - [ ] Add server integration tests against local D1/Workers test runtime.
 - [ ] Add migration/backup/restore and observability runbooks.
 - [ ] Run multi-account security tests before calling shared alarms production-ready.
-- [ ] Reconnect the Fold 5 and complete physical-device QA after the backend/auth slice is implemented.
+- [ ] Complete physical Android device QA after the backend/auth slice is implemented.
