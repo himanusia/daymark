@@ -2,7 +2,7 @@ import 'package:flutter/foundation.dart';
 
 import '../data/event_repository.dart';
 import '../domain/countdown.dart';
-import '../domain/jelara_event.dart';
+import '../domain/itstheday_event.dart';
 import '../platform/google_calendar_gateway.dart';
 import '../platform/platform_interfaces.dart';
 
@@ -20,8 +20,8 @@ class SaveEventResult {
 
 /// Coordinates local data and platform ports without exposing Android APIs to
 /// the widgets. All time-dependent work takes a clock so it remains testable.
-class JelaraController extends ChangeNotifier {
-  JelaraController({
+class ItsTheDayController extends ChangeNotifier {
+  ItsTheDayController({
     required EventRepository repository,
     required CalendarGateway calendar,
     required WidgetGateway widget,
@@ -43,16 +43,16 @@ class JelaraController extends ChangeNotifier {
   final GoogleCalendarGateway _googleCalendar;
   final DateTime Function() _clock;
 
-  List<JelaraEvent> _events = const [];
+  List<ItsTheDayEvent> _events = const [];
   String? _selectedId;
   GoogleCalendarAccount? _googleCalendarAccount;
   bool _initialized = false;
 
   bool get isInitialized => _initialized;
 
-  List<JelaraEvent> get events => List.unmodifiable(_events);
+  List<ItsTheDayEvent> get events => List.unmodifiable(_events);
 
-  JelaraEvent? get selectedEvent {
+  ItsTheDayEvent? get selectedEvent {
     for (final event in _events) {
       if (event.id == _selectedId) return event;
     }
@@ -73,9 +73,9 @@ class JelaraController extends ChangeNotifier {
   Future<void> initialize() async {
     if (_initialized) return;
     final stored = await _repository.read();
-    final loaded = List<JelaraEvent>.of(stored.events);
+    final loaded = List<ItsTheDayEvent>.of(stored.events);
     if (!stored.hasStoredData) {
-      final demo = JelaraEvent.demo(_clock());
+      final demo = ItsTheDayEvent.demo(_clock());
       loaded.add(demo);
       _selectedId = demo.id;
       _events = _sortEvents(loaded);
@@ -98,11 +98,11 @@ class JelaraController extends ChangeNotifier {
     await _syncWidget();
   }
 
-  CountdownSnapshot countdownFor(JelaraEvent event) {
+  CountdownSnapshot countdownFor(ItsTheDayEvent event) {
     return CountdownCalculator.calculate(event, _clock());
   }
 
-  Future<SaveEventResult> saveEvent(JelaraEvent event) async {
+  Future<SaveEventResult> saveEvent(ItsTheDayEvent event) async {
     final existing = _find(event.id);
     String? warning;
     NotificationPermissionStatus? permission;
@@ -123,7 +123,7 @@ class JelaraController extends ChangeNotifier {
       warning = 'Reminder sync failed: $error';
     }
 
-    final next = List<JelaraEvent>.of(_events);
+    final next = List<ItsTheDayEvent>.of(_events);
     if (existing == null) {
       next.add(event);
     } else {
@@ -186,7 +186,7 @@ class JelaraController extends ChangeNotifier {
   /// Allows the home screen to repaint after its foreground timer ticks.
   void refreshCountdown() => notifyListeners();
 
-  JelaraEvent? _find(String id) {
+  ItsTheDayEvent? _find(String id) {
     for (final event in _events) {
       if (event.id == id) return event;
     }
@@ -198,8 +198,8 @@ class JelaraController extends ChangeNotifier {
     return _find(candidate) == null ? null : candidate;
   }
 
-  List<JelaraEvent> _sortEvents(Iterable<JelaraEvent> events) {
-    final result = List<JelaraEvent>.of(events);
+  List<ItsTheDayEvent> _sortEvents(Iterable<ItsTheDayEvent> events) {
+    final result = List<ItsTheDayEvent>.of(events);
     result.sort((a, b) => a.localStart.compareTo(b.localStart));
     return result;
   }

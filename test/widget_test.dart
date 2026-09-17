@@ -1,15 +1,15 @@
 import 'package:flutter_test/flutter_test.dart';
 
-import 'package:jelara/data/event_repository.dart';
-import 'package:jelara/domain/jelara_event.dart';
-import 'package:jelara/platform/platform_interfaces.dart';
-import 'package:jelara/presentation/jelara_app.dart';
+import 'package:its_the_day/data/event_repository.dart';
+import 'package:its_the_day/domain/itstheday_event.dart';
+import 'package:its_the_day/platform/platform_interfaces.dart';
+import 'package:its_the_day/presentation/itstheday_app.dart';
 
 void main() {
   testWidgets('renders a focal mark with its semantic countdown state', (
     tester,
   ) async {
-    final event = JelaraEvent(
+    final event = ItsTheDayEvent(
       id: 'launch',
       title: 'Product launch',
       start: DateTime(2026, 9, 20),
@@ -17,7 +17,7 @@ void main() {
     );
 
     await tester.pumpWidget(
-      JelaraApp(
+      ItsTheDayApp(
         repository: MemoryEventRepository(
           events: [event],
           selectedId: event.id,
@@ -30,7 +30,7 @@ void main() {
     );
     await tester.pumpAndSettle();
 
-    expect(find.text('JELARA'), findsOneWidget);
+    expect(find.text("IT'S THE DAY!"), findsOneWidget);
     expect(find.text('Make time visible.'), findsOneWidget);
     expect(find.text('Product launch'), findsNWidgets(2));
     expect(find.text('D-4'), findsNWidgets(2));

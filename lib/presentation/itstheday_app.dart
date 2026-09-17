@@ -3,12 +3,12 @@ import 'package:flutter/material.dart';
 import '../data/event_repository.dart';
 import '../platform/google_calendar_gateway.dart';
 import '../platform/platform_interfaces.dart';
-import 'jelara_controller.dart';
-import 'jelara_theme.dart';
+import 'itstheday_controller.dart';
+import 'itstheday_theme.dart';
 import 'home_page.dart';
 
-class JelaraApp extends StatelessWidget {
-  const JelaraApp({
+class ItsTheDayApp extends StatelessWidget {
+  const ItsTheDayApp({
     super.key,
     required this.repository,
     required this.calendar,
@@ -27,7 +27,7 @@ class JelaraApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final controller = JelaraController(
+    final controller = ItsTheDayController(
       repository: repository,
       calendar: calendar,
       widget: widget,
@@ -36,26 +36,26 @@ class JelaraApp extends StatelessWidget {
       clock: clock,
     );
     return MaterialApp(
-      title: 'Jelara',
+      title: "It's the Day!",
       debugShowCheckedModeBanner: false,
-      theme: jelaraLightTheme(),
-      darkTheme: jelaraDarkTheme(),
+      theme: itsthedayLightTheme(),
+      darkTheme: itsthedayDarkTheme(),
       themeMode: ThemeMode.system,
-      home: _JelaraBootstrap(controller: controller),
+      home: _ItsTheDayBootstrap(controller: controller),
     );
   }
 }
 
-class _JelaraBootstrap extends StatefulWidget {
-  const _JelaraBootstrap({required this.controller});
+class _ItsTheDayBootstrap extends StatefulWidget {
+  const _ItsTheDayBootstrap({required this.controller});
 
-  final JelaraController controller;
+  final ItsTheDayController controller;
 
   @override
-  State<_JelaraBootstrap> createState() => _JelaraBootstrapState();
+  State<_ItsTheDayBootstrap> createState() => _ItsTheDayBootstrapState();
 }
 
-class _JelaraBootstrapState extends State<_JelaraBootstrap> {
+class _ItsTheDayBootstrapState extends State<_ItsTheDayBootstrap> {
   late Future<void> _ready;
 
   @override
@@ -70,10 +70,10 @@ class _JelaraBootstrapState extends State<_JelaraBootstrap> {
       future: _ready,
       builder: (context, snapshot) {
         if (snapshot.connectionState != ConnectionState.done) {
-          return const _JelaraLoading();
+          return const _ItsTheDayLoading();
         }
         if (snapshot.hasError) {
-          return _JelaraLoadError(onRetry: _retry);
+          return _ItsTheDayLoadError(onRetry: _retry);
         }
         return HomePage(controller: widget.controller);
       },
@@ -87,8 +87,8 @@ class _JelaraBootstrapState extends State<_JelaraBootstrap> {
   }
 }
 
-class _JelaraLoading extends StatelessWidget {
-  const _JelaraLoading();
+class _ItsTheDayLoading extends StatelessWidget {
+  const _ItsTheDayLoading();
 
   @override
   Widget build(BuildContext context) {
@@ -98,7 +98,7 @@ class _JelaraLoading extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           children: [
             Text(
-              'JELARA',
+              "IT'S THE DAY!",
               style: Theme.of(context).textTheme.labelMedium?.copyWith(
                 color: Theme.of(context).colorScheme.primary,
                 letterSpacing: 2.4,
@@ -120,8 +120,8 @@ class _JelaraLoading extends StatelessWidget {
   }
 }
 
-class _JelaraLoadError extends StatelessWidget {
-  const _JelaraLoadError({required this.onRetry});
+class _ItsTheDayLoadError extends StatelessWidget {
+  const _ItsTheDayLoadError({required this.onRetry});
 
   final VoidCallback onRetry;
 
@@ -141,7 +141,7 @@ class _JelaraLoadError extends StatelessWidget {
               ),
               const SizedBox(height: 16),
               Text(
-                'Jelara could not open your marks.',
+                "It's the Day! could not open your marks.",
                 textAlign: TextAlign.center,
                 style: Theme.of(context).textTheme.titleLarge,
               ),

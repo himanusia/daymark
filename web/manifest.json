@@ -1,11 +1,11 @@
 {
-    "name": "jelara",
-    "short_name": "jelara",
+    "name": "It's the Day!",
+    "short_name": "It's the Day!",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",
     "theme_color": "#0175C2",
-    "description": "A new Flutter project.",
+    "description": "Countdowns, reminders, widgets, and shared moments.",
     "orientation": "portrait-primary",
     "prefer_related_applications": false,
     "icons": [

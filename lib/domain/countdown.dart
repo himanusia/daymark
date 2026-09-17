@@ -1,4 +1,4 @@
-import 'jelara_event.dart';
+import 'itstheday_event.dart';
 
 /// The semantic state of an event at a given instant.
 enum CountdownStatus { upcoming, today, overdue }
@@ -42,7 +42,7 @@ class CountdownSnapshot {
 class CountdownCalculator {
   const CountdownCalculator._();
 
-  static CountdownSnapshot calculate(JelaraEvent event, DateTime now) {
+  static CountdownSnapshot calculate(ItsTheDayEvent event, DateTime now) {
     final localNow = now.toLocal();
     final localStart = event.localStart;
     final nowDate = DateTime(localNow.year, localNow.month, localNow.day);

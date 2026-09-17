@@ -1,4 +1,4 @@
-name: jelara
+name: its_the_day
 description: "Android-first H-minus countdowns with reminders and calendar sync."
 # The following line prevents the package from being accidentally published to
 # pub.dev using `flutter pub publish`. This is preferred for private packages.

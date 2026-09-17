@@ -1,4 +1,4 @@
-# Jelara
+# It's the Day!
 
 An Android-first countdown app for events, H-7/H-3/H-1/H-0 reminders, a home-screen widget, and calendar import.
 
@@ -31,7 +31,7 @@ The app does not contain a client secret or a hard-coded OAuth credential. Creat
 
 1. Enable **Google Calendar API**.
 2. Configure the OAuth consent screen and add the testing Google account as a test user while the app is unverified.
-3. Create an **Android OAuth client** for package `com.himanusia.jelara` and the SHA-1 certificate used by the build. `cd android && ./gradlew signingReport` prints the debug certificate.
+3. Create an **Android OAuth client** for package `com.himanusia.itstheday` and the SHA-1 certificate used by the build. `cd android && ./gradlew signingReport` prints the debug certificate.
 4. Create or keep a **Web application OAuth client** in the same project.
 5. Build with that web client ID supplied out of band:
 
@@ -56,4 +56,4 @@ The normal gate order is:
 3. Android emulator install/smoke test
 4. Physical Fold 5 install/visual and interaction QA
 
-The display name and current package/repository slug are **Jelara**.
+The display name and current package/repository slug are **It's the Day!**.

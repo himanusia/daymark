@@ -1,5 +1,5 @@
 import '../domain/countdown.dart';
-import '../domain/jelara_event.dart';
+import '../domain/itstheday_event.dart';
 
 class GoogleCalendarAccount {
   const GoogleCalendarAccount({
@@ -37,9 +37,9 @@ class ImportedCalendarEvent {
   final String? calendarName;
   final CalendarProvider provider;
 
-  JelaraEvent toJelaraEvent() {
+  ItsTheDayEvent toItsTheDayEvent() {
     final localStart = start.toLocal();
-    return JelaraEvent(
+    return ItsTheDayEvent(
       id: 'calendar-$sourceId-${localStart.millisecondsSinceEpoch}',
       title: title.trim(),
       start: allDay
@@ -108,7 +108,7 @@ abstract interface class GoogleCalendarGateway {
 }
 
 abstract interface class WidgetGateway {
-  Future<void> update(JelaraEvent event, CountdownSnapshot snapshot);
+  Future<void> update(ItsTheDayEvent event, CountdownSnapshot snapshot);
 
   Future<void> clear();
 }
@@ -116,7 +116,7 @@ abstract interface class WidgetGateway {
 abstract interface class ReminderGateway {
   Future<NotificationPermissionStatus> requestPermission();
 
-  Future<void> sync(JelaraEvent event, {required DateTime now});
+  Future<void> sync(ItsTheDayEvent event, {required DateTime now});
 
   Future<void> cancelEvent(String eventId);
 }
@@ -140,7 +140,7 @@ class UnsupportedWidgetGateway implements WidgetGateway {
   Future<void> clear() async {}
 
   @override
-  Future<void> update(JelaraEvent event, CountdownSnapshot snapshot) async {}
+  Future<void> update(ItsTheDayEvent event, CountdownSnapshot snapshot) async {}
 }
 
 class UnsupportedReminderGateway implements ReminderGateway {
@@ -154,5 +154,5 @@ class UnsupportedReminderGateway implements ReminderGateway {
       NotificationPermissionStatus.unavailable;
 
   @override
-  Future<void> sync(JelaraEvent event, {required DateTime now}) async {}
+  Future<void> sync(ItsTheDayEvent event, {required DateTime now}) async {}
 }

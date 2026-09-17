@@ -1,12 +1,12 @@
 import 'package:flutter_test/flutter_test.dart';
 
-import 'package:jelara/domain/jelara_event.dart';
-import 'package:jelara/domain/reminder.dart';
+import 'package:its_the_day/domain/itstheday_event.dart';
+import 'package:its_the_day/domain/reminder.dart';
 
 void main() {
   group('ReminderSchedule', () {
     test('calculates selected timed reminders relative to the event time', () {
-      final event = JelaraEvent(
+      final event = ItsTheDayEvent(
         id: 'flight',
         title: 'Flight',
         start: DateTime(2026, 9, 20, 12),
@@ -39,7 +39,7 @@ void main() {
     });
 
     test('uses local midnight as the anchor for all-day reminders', () {
-      final event = JelaraEvent(
+      final event = ItsTheDayEvent(
         id: 'conference',
         title: 'Conference',
         start: DateTime(2026, 9, 21),
@@ -66,7 +66,7 @@ void main() {
     });
 
     test('does not schedule reminders that are already in the past', () {
-      final event = JelaraEvent(
+      final event = ItsTheDayEvent(
         id: 'past',
         title: 'Past event',
         start: DateTime(2026, 9, 20, 12),
@@ -91,7 +91,7 @@ void main() {
     });
 
     test('orders reminders by their H-minus offset', () {
-      final event = JelaraEvent(
+      final event = ItsTheDayEvent(
         id: 'ordered',
         title: 'Ordered',
         start: DateTime(2026, 9, 20, 12),
