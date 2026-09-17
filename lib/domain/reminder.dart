@@ -1,4 +1,4 @@
-import 'jelara_event.dart';
+import 'itstheday_event.dart';
 
 class ScheduledReminder {
   const ScheduledReminder({required this.offset, required this.at});
@@ -15,7 +15,7 @@ class ReminderSchedule {
   /// All-day events use local midnight as their deterministic anchor. The
   /// caller supplies [now] so this logic is pure and easy to test.
   static List<ScheduledReminder> forEvent(
-    JelaraEvent event, {
+    ItsTheDayEvent event, {
     required DateTime now,
   }) {
     final localStart = event.localStart;

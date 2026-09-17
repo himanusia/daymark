@@ -2,7 +2,7 @@ import 'dart:convert';
 
 import 'package:shared_preferences/shared_preferences.dart';
 
-import '../domain/jelara_event.dart';
+import '../domain/itstheday_event.dart';
 
 class EventStore {
   const EventStore({
@@ -11,7 +11,7 @@ class EventStore {
     required this.hasStoredData,
   });
 
-  final List<JelaraEvent> events;
+  final List<ItsTheDayEvent> events;
   final String? selectedId;
   final bool hasStoredData;
 }
@@ -20,7 +20,7 @@ abstract interface class EventRepository {
   Future<EventStore> read();
 
   Future<void> write({
-    required List<JelaraEvent> events,
+    required List<ItsTheDayEvent> events,
     required String? selectedId,
   });
 }
@@ -30,7 +30,7 @@ class SharedPreferencesEventRepository implements EventRepository {
     Future<SharedPreferences> Function()? preferencesLoader,
   }) : _preferencesLoader = preferencesLoader ?? SharedPreferences.getInstance;
 
-  static const storageKey = 'jelara.event_store.v1';
+  static const storageKey = 'itstheday.event_store.v1';
 
   final Future<SharedPreferences> Function() _preferencesLoader;
 
@@ -40,7 +40,7 @@ class SharedPreferencesEventRepository implements EventRepository {
     final encoded = preferences.getString(storageKey);
     if (encoded == null) {
       return const EventStore(
-        events: <JelaraEvent>[],
+        events: <ItsTheDayEvent>[],
         selectedId: null,
         hasStoredData: false,
       );
@@ -50,19 +50,19 @@ class SharedPreferencesEventRepository implements EventRepository {
       final decoded = jsonDecode(encoded);
       if (decoded is! Map) {
         return const EventStore(
-          events: <JelaraEvent>[],
+          events: <ItsTheDayEvent>[],
           selectedId: null,
           hasStoredData: true,
         );
       }
       final rawEvents = decoded['events'];
-      final events = <JelaraEvent>[];
+      final events = <ItsTheDayEvent>[];
       if (rawEvents is List) {
         for (final rawEvent in rawEvents) {
           if (rawEvent is! Map) continue;
           try {
             events.add(
-              JelaraEvent.fromJson(Map<String, dynamic>.from(rawEvent)),
+              ItsTheDayEvent.fromJson(Map<String, dynamic>.from(rawEvent)),
             );
           } on Object {
             // Keep the rest of the user's events if one old record is bad.
@@ -78,7 +78,7 @@ class SharedPreferencesEventRepository implements EventRepository {
       // Treat malformed local data as an empty, already-initialized store.
       // This avoids resurrecting the demo after the user has created data.
       return const EventStore(
-        events: <JelaraEvent>[],
+        events: <ItsTheDayEvent>[],
         selectedId: null,
         hasStoredData: true,
       );
@@ -87,7 +87,7 @@ class SharedPreferencesEventRepository implements EventRepository {
 
   @override
   Future<void> write({
-    required List<JelaraEvent> events,
+    required List<ItsTheDayEvent> events,
     required String? selectedId,
   }) async {
     final preferences = await _preferencesLoader();
@@ -104,14 +104,14 @@ class SharedPreferencesEventRepository implements EventRepository {
 /// A deterministic repository for app/widget tests and non-Android previews.
 class MemoryEventRepository implements EventRepository {
   MemoryEventRepository({
-    List<JelaraEvent> events = const [],
+    List<ItsTheDayEvent> events = const [],
     String? selectedId,
     bool hasStoredData = true,
   }) : _events = List.of(events),
        _selectedId = selectedId,
        _hasStoredData = hasStoredData;
 
-  List<JelaraEvent> _events;
+  List<ItsTheDayEvent> _events;
   String? _selectedId;
   bool _hasStoredData;
 
@@ -124,7 +124,7 @@ class MemoryEventRepository implements EventRepository {
 
   @override
   Future<void> write({
-    required List<JelaraEvent> events,
+    required List<ItsTheDayEvent> events,
     required String? selectedId,
   }) async {
     _events = List.of(events);

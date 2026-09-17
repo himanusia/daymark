@@ -5,7 +5,7 @@
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
     <application
-        android:label="Jelara"
+        android:label="It's the Day!"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity
@@ -36,14 +36,14 @@
             android:name="flutterEmbedding"
             android:value="2" />
         <receiver
-            android:name=".JelaraWidgetProvider"
+            android:name=".ItsTheDayWidgetProvider"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
             </intent-filter>
             <meta-data
                 android:name="android.appwidget.provider"
-                android:resource="@xml/jelara_widget_info" />
+                android:resource="@xml/itstheday_widget_info" />
         </receiver>
         <receiver
             android:exported="false"

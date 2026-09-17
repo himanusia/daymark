@@ -1,9 +1,9 @@
-/// A locally stored Jelara event.
+/// A locally stored ItsTheDay event.
 ///
 /// `start` is kept as a [DateTime] rather than a formatted string so that
 /// comparisons retain the instant and timezone offset supplied by the caller.
-class JelaraEvent {
-  JelaraEvent({
+class ItsTheDayEvent {
+  ItsTheDayEvent({
     required this.id,
     required this.title,
     required this.start,
@@ -26,7 +26,7 @@ class JelaraEvent {
   DateTime get localDate =>
       DateTime(localStart.year, localStart.month, localStart.day);
 
-  JelaraEvent copyWith({
+  ItsTheDayEvent copyWith({
     String? id,
     String? title,
     DateTime? start,
@@ -34,7 +34,7 @@ class JelaraEvent {
     Set<ReminderOffset>? reminders,
     EventSource? source,
   }) {
-    return JelaraEvent(
+    return ItsTheDayEvent(
       id: id ?? this.id,
       title: title ?? this.title,
       start: start ?? this.start,
@@ -55,13 +55,13 @@ class JelaraEvent {
     };
   }
 
-  factory JelaraEvent.fromJson(Map<String, dynamic> json) {
+  factory ItsTheDayEvent.fromJson(Map<String, dynamic> json) {
     final rawReminders = json['reminders'];
     final reminderValues = rawReminders is List
         ? rawReminders.whereType<String>()
         : const <String>[];
 
-    return JelaraEvent(
+    return ItsTheDayEvent(
       id: json['id'] as String,
       title: json['title'] as String,
       start: DateTime.parse(json['start'] as String),
@@ -80,9 +80,9 @@ class JelaraEvent {
 
   /// A useful first-run mark. It is only used when the store has never held
   /// data; saving an empty list prevents this demo from returning after delete.
-  factory JelaraEvent.demo(DateTime now) {
+  factory ItsTheDayEvent.demo(DateTime now) {
     final localNow = now.toLocal();
-    return JelaraEvent(
+    return ItsTheDayEvent(
       id: 'demo-welcome',
       title: 'A quiet weekend reset',
       start: DateTime(localNow.year, localNow.month, localNow.day + 3, 9),
@@ -92,7 +92,7 @@ class JelaraEvent {
 
   @override
   bool operator ==(Object other) {
-    return other is JelaraEvent &&
+    return other is ItsTheDayEvent &&
         other.id == id &&
         other.title == title &&
         other.start == start &&
@@ -109,7 +109,7 @@ class JelaraEvent {
 
 enum EventSource { manual, calendar, google }
 
-/// The four reminder choices in the Jelara MVP.
+/// The four reminder choices in the ItsTheDay MVP.
 enum ReminderOffset {
   h7(7, 'H-7', '7 days before'),
   h3(3, 'H-3', '3 days before'),

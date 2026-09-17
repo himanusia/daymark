@@ -1,4 +1,4 @@
-package com.himanusia.jelara
+package com.himanusia.itstheday
 
 import android.Manifest
 import android.app.Activity
@@ -16,10 +16,10 @@ import io.flutter.plugin.common.MethodChannel
 
 class MainActivity : FlutterActivity() {
     companion object {
-        private const val CALENDAR_CHANNEL = "jelara/calendar"
-        private const val WIDGET_CHANNEL = "jelara/widget"
+        private const val CALENDAR_CHANNEL = "itstheday/calendar"
+        private const val WIDGET_CHANNEL = "itstheday/widget"
         private const val READ_CALENDAR_REQUEST = 701
-        private const val WIDGET_PREFS = "jelara_widget"
+        private const val WIDGET_PREFS = "itstheday_widget"
         private const val KEY_TITLE = "title"
         private const val KEY_COUNTDOWN = "countdown"
         private const val KEY_STATUS = "status"
@@ -181,10 +181,10 @@ class MainActivity : FlutterActivity() {
 
     private fun updateAllWidgets() {
         val manager = AppWidgetManager.getInstance(this)
-        val component = ComponentName(this, JelaraWidgetProvider::class.java)
+        val component = ComponentName(this, ItsTheDayWidgetProvider::class.java)
         val ids = manager.getAppWidgetIds(component)
         if (ids.isNotEmpty()) {
-            JelaraWidgetProvider.updateAll(this, ids)
+            ItsTheDayWidgetProvider.updateAll(this, ids)
         }
     }
 }

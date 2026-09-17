@@ -1,4 +1,4 @@
-package com.himanusia.jelara
+package com.himanusia.itstheday
 
 import android.app.PendingIntent
 import android.appwidget.AppWidgetManager
@@ -9,7 +9,7 @@ import android.content.Intent
 import android.os.Build
 import android.widget.RemoteViews
 
-class JelaraWidgetProvider : AppWidgetProvider() {
+class ItsTheDayWidgetProvider : AppWidgetProvider() {
     override fun onUpdate(
         context: Context,
         appWidgetManager: AppWidgetManager,
@@ -19,7 +19,7 @@ class JelaraWidgetProvider : AppWidgetProvider() {
     }
 
     companion object {
-        private const val WIDGET_PREFS = "jelara_widget"
+        private const val WIDGET_PREFS = "itstheday_widget"
         private const val KEY_TITLE = "title"
         private const val KEY_COUNTDOWN = "countdown"
         private const val KEY_STATUS = "status"
@@ -27,7 +27,7 @@ class JelaraWidgetProvider : AppWidgetProvider() {
         fun updateAll(context: Context, widgetIds: IntArray? = null) {
             val manager = AppWidgetManager.getInstance(context)
             val ids = widgetIds ?: manager.getAppWidgetIds(
-                ComponentName(context, JelaraWidgetProvider::class.java),
+                ComponentName(context, ItsTheDayWidgetProvider::class.java),
             )
             ids.forEach { widgetId ->
                 manager.updateAppWidget(widgetId, buildRemoteViews(context))
@@ -37,13 +37,13 @@ class JelaraWidgetProvider : AppWidgetProvider() {
         private fun buildRemoteViews(context: Context): RemoteViews {
             val preferences = context.getSharedPreferences(WIDGET_PREFS, Context.MODE_PRIVATE)
             val title = preferences.getString(KEY_TITLE, null).orEmpty()
-                .ifBlank { "Add a mark in Jelara" }
+                .ifBlank { "Add a mark in It's the Day!" }
             val countdown = preferences.getString(KEY_COUNTDOWN, null).orEmpty()
                 .ifBlank { "—" }
             val status = preferences.getString(KEY_STATUS, null).orEmpty()
                 .ifBlank { "FOCUS" }
 
-            val views = RemoteViews(context.packageName, R.layout.jelara_widget)
+            val views = RemoteViews(context.packageName, R.layout.itstheday_widget)
             views.setTextViewText(R.id.widget_status, status.uppercase())
             views.setTextViewText(R.id.widget_title, title)
             views.setTextViewText(R.id.widget_countdown, countdown)

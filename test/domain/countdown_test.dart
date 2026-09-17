@@ -1,12 +1,12 @@
 import 'package:flutter_test/flutter_test.dart';
 
-import 'package:jelara/domain/countdown.dart';
-import 'package:jelara/domain/jelara_event.dart';
+import 'package:its_the_day/domain/countdown.dart';
+import 'package:its_the_day/domain/itstheday_event.dart';
 
 void main() {
   group('CountdownCalculator', () {
     test('counts calendar days for an all-day event', () {
-      final event = JelaraEvent(
+      final event = ItsTheDayEvent(
         id: 'launch',
         title: 'Product launch',
         start: DateTime(2026, 9, 20),
@@ -25,7 +25,7 @@ void main() {
     });
 
     test('uses a clock countdown for a timed event happening today', () {
-      final event = JelaraEvent(
+      final event = ItsTheDayEvent(
         id: 'dentist',
         title: 'Dentist',
         start: DateTime(2026, 9, 16, 14, 30),
@@ -45,7 +45,7 @@ void main() {
     });
 
     test('marks a timed event overdue after its start time', () {
-      final event = JelaraEvent(
+      final event = ItsTheDayEvent(
         id: 'review',
         title: 'Design review',
         start: DateTime(2026, 9, 16, 8, 30),
@@ -64,7 +64,7 @@ void main() {
     });
 
     test('marks yesterday all-day events overdue by calendar day', () {
-      final event = JelaraEvent(
+      final event = ItsTheDayEvent(
         id: 'birthday',
         title: 'Birthday',
         start: DateTime(2026, 9, 15),
@@ -82,7 +82,7 @@ void main() {
     });
 
     test('formats an all-day event today as D-DAY instead of hours', () {
-      final event = JelaraEvent(
+      final event = ItsTheDayEvent(
         id: 'today',
         title: 'Today',
         start: DateTime(2026, 9, 16),
